@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>当黑暗亲吻你</title>
-
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
       background: #0b0b0c;
       color: #ededed;
     }
@@ -20,20 +23,26 @@
     }
 
     .title {
-      font-size: 24px;
-      font-weight: 600;
+      font-size: 26px;
+      font-weight: 700;
+      margin-top: 4px;
     }
 
     .subtitle {
       font-size: 12px;
       color: #8a8a8f;
       margin-top: 6px;
+      line-height: 1.6;
     }
 
     .tag {
+      display: inline-block;
       margin-top: 10px;
       font-size: 11px;
       color: #8a8a8f;
+      padding: 5px 10px;
+      border: 1px solid #2c2c31;
+      border-radius: 999px;
     }
 
     .character-box {
@@ -41,208 +50,317 @@
       border-radius: 16px;
       overflow: hidden;
       background: #111;
+      border: 1px solid #1a1a1d;
     }
 
     .character-box img {
       width: 100%;
       height: 420px;
       object-fit: cover;
+      display: block;
     }
 
     .panel {
       margin-top: 16px;
       padding: 14px;
-      border-radius: 12px;
+      border-radius: 14px;
       background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.05);
     }
 
     .stats {
       font-size: 13px;
-      line-height: 1.8;
-      color: #cfcfd3;
+      line-height: 1.9;
+      color: #d0d0d5;
     }
 
     .dialogue {
-      min-height: 60px;
+      min-height: 72px;
       font-size: 15px;
+      line-height: 1.75;
+      color: #f1f1f3;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .small {
+      font-size: 12px;
+      color: #8a8a8f;
       line-height: 1.6;
     }
 
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
     .buttons {
-      margin-top: 10px;
+      margin-top: 14px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
     button {
-      padding: 10px;
-      border-radius: 10px;
+      padding: 12px;
+      border-radius: 12px;
       border: 1px solid #444;
       background: transparent;
       color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: rgba(255,255,255,0.05);
     }
 
     button:disabled {
       opacity: 0.4;
-    }
-
-    .small {
-      font-size: 12px;
-      color: #8a8a8f;
+      cursor: not-allowed;
     }
 
     input {
       width: 100%;
-      padding: 10px;
-      border-radius: 10px;
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 12px;
       border: none;
+      outline: none;
       background: #1a1a1d;
       color: #fff;
+      font-size: 14px;
+    }
+
+    .send-btn {
+      width: 100%;
       margin-top: 10px;
+    }
+
+    .footer-tip {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 12px;
+      color: #8a8a8f;
     }
   </style>
 </head>
-
 <body>
+  <div class="container">
+    <div class="title">当黑暗亲吻你</div>
+    <div class="subtitle">Demo 试玩版 · 他在黑暗中学会因你而变化</div>
+    <div class="tag">病弱禁欲型 · Demo v2</div>
 
-<div class="container">
-
-  <div class="title">当黑暗亲吻你</div>
-  <div class="subtitle">他在黑暗中学会因你而变化</div>
-  <div class="tag">试玩版 · 病弱禁欲型</div>
-
-  <div class="character-box">
-    <img id="characterImage" src="https://picsum.photos/480/720?grayscale">
-  </div>
-
-  <div class="panel stats">
-    好感度：<span id="affinity">0</span>/100<br>
-    同步率：<span id="sync">3</span>%<br>
-    状态：<span id="status">警惕</span><br>
-    糖果：<span id="candy">1</span>
-  </div>
-
-  <div class="panel dialogue" id="dialogue">
-    ……你是谁？这里不是你该来的地方。
-  </div>
-
-  <div class="panel">
-    <div>每日奖励</div>
-    <div class="small">今天可以领取一颗糖。</div>
-    <button onclick="claimCandy()">领取今日糖果</button>
-  </div>
-
-  <div class="panel">
-    <div>今日互动</div>
-    <div class="small">剩余次数：<span id="remaining">5</span></div>
-
-    <div class="buttons">
-      <button onclick="talk()">聊天</button>
-      <button onclick="touch()">触碰</button>
-      <button onclick="approach()">靠近</button>
-      <button onclick="giveCandy()">喂他糖</button>
+    <div class="character-box">
+      <img id="characterImage" src="https://picsum.photos/480/720?grayscale" alt="角色状态图">
     </div>
 
-    <input id="userInput" placeholder="你想对他说什么…">
-    <button onclick="sendMessage()">发送</button>
+    <div class="panel stats">
+      好感度：<span id="affinity">0</span>/100<br>
+      同步率：<span id="sync">3</span>%<br>
+      状态：<span id="status">警惕</span><br>
+      糖果：<span id="candy">1</span>
+    </div>
+
+    <div class="panel dialogue" id="dialogue">
+      ……你是谁？这里不是你该来的地方。
+    </div>
+
+    <div class="panel">
+      <div class="row">
+        <div>
+          <div class="section-title">每日奖励</div>
+          <div class="small">今天可以领取一颗糖。</div>
+        </div>
+        <button id="claimBtn" onclick="claimCandy()">领取今日糖果</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="row">
+        <div>
+          <div class="section-title">今日互动</div>
+          <div class="small">今天最多可以互动 5 次。</div>
+        </div>
+        <div class="small">剩余次数：<span id="remaining">5</span></div>
+      </div>
+
+      <div class="buttons">
+        <button id="talkBtn" onclick="talk()">聊天</button>
+        <button id="touchBtn" onclick="touch()">触碰</button>
+        <button id="approachBtn" onclick="approach()">靠近</button>
+        <button id="candyBtn" onclick="giveCandy()">喂他糖</button>
+      </div>
+
+      <input id="userInput" placeholder="你想对他说什么……">
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">发送</button>
+    </div>
+
+    <div class="footer-tip">正式版游玩即将开放</div>
   </div>
 
-  <div class="small" style="margin-top:15px;text-align:center;">
-    正式版游玩即将开放
-  </div>
+  <script>
+    let affinity = 0;
+    let sync = 3;
+    let candy = 1;
+    let remaining = 5;
+    let claimed = false;
 
-</div>
+    const images = {
+      警惕: "https://picsum.photos/480/720?grayscale",
+      动摇: "https://picsum.photos/481/720?grayscale",
+      依赖: "https://picsum.photos/482/720"
+    };
 
-<script>
-let affinity = 0;
-let sync = 3;
-let candy = 1;
-let remaining = 5;
-let claimed = false;
+    function getStatus() {
+      if (affinity >= 25) return "依赖";
+      if (affinity >= 10) return "动摇";
+      return "警惕";
+    }
 
-function getStatus(){
-  if(affinity>=25) return "依赖";
-  if(affinity>=10) return "动摇";
-  return "警惕";
-}
+    function getDialogue(action) {
+      const lines = {
+        警惕: {
+          聊天: "……别和我说太多话。我不习惯有人停留。",
+          触碰: "别碰我……你不知道这意味着什么。",
+          靠近: "你为什么还不走？",
+          喂糖: "给我的？……你没必要这样。"
+        },
+        动摇: {
+          聊天: "你每天都来。……你不觉得麻烦吗。",
+          触碰: "你这样会让我误会。",
+          靠近: "再靠近一点，我可能就没办法装作不在意了。",
+          喂糖: "原来你真的记得我喜欢甜的。"
+        },
+        依赖: {
+          聊天: "今天也会陪我吗？",
+          触碰: "……别这样。我会开始依赖你。",
+          靠近: "你靠近的时候，我会忘记这里有多冷。",
+          喂糖: "下次……还能再给我一颗吗？"
+        }
+      };
 
-function update(){
-  document.getElementById("affinity").innerText = affinity;
-  document.getElementById("sync").innerText = sync;
-  document.getElementById("candy").innerText = candy;
-  document.getElementById("remaining").innerText = remaining;
-  document.getElementById("status").innerText = getStatus();
-}
+      return lines[getStatus()][action];
+    }
 
-function spend(){
-  if(remaining<=0){
-    document.getElementById("dialogue").innerText="他今天已经很疲惫了，明天再来见他。";
-    return false;
-  }
-  remaining--;
-  return true;
-}
+    function updateCharacter() {
+      const status = getStatus();
+      document.getElementById("characterImage").src = images[status];
+    }
 
-function talk(){
-  if(!spend()) return;
-  affinity+=1;
-  document.getElementById("dialogue").innerText="……别和我说太多话。";
-  update();
-}
+    function disableActions() {
+      document.getElementById("talkBtn").disabled = true;
+      document.getElementById("touchBtn").disabled = true;
+      document.getElementById("approachBtn").disabled = true;
+      document.getElementById("candyBtn").disabled = true;
+      document.getElementById("sendBtn").disabled = true;
+    }
 
-function touch(){
-  if(!spend()) return;
-  affinity+=2;
-  sync+=1;
-  document.getElementById("dialogue").innerText="别碰我……";
-  update();
-}
+    function updateUI() {
+      document.getElementById("affinity").innerText = affinity;
+      document.getElementById("sync").innerText = sync;
+      document.getElementById("candy").innerText = candy;
+      document.getElementById("remaining").innerText = remaining;
+      document.getElementById("status").innerText = getStatus();
 
-function approach(){
-  if(!spend()) return;
-  affinity+=3;
-  document.getElementById("dialogue").innerText="你为什么还不走？";
-  update();
-}
+      if (claimed) {
+        document.getElementById("claimBtn").disabled = true;
+      }
 
-function giveCandy(){
-  if(candy<=0){
-    document.getElementById("dialogue").innerText="你没有糖了。";
-    return;
-  }
-  if(!spend()) return;
-  candy--;
-  affinity+=5;
-  sync+=2;
-  document.getElementById("dialogue").innerText="……给我的？";
-  update();
-}
+      if (remaining <= 0) {
+        disableActions();
+        document.getElementById("dialogue").innerText = "他今天已经很疲惫了，明天再来见他。";
+      }
 
-function claimCandy(){
-  if(claimed) return;
-  candy++;
-  claimed=true;
-  document.getElementById("dialogue").innerText="你悄悄放了一颗糖。他注意到了。";
-  update();
-}
+      updateCharacter();
+    }
 
-function sendMessage(){
-  let input=document.getElementById("userInput").value;
+    function spendAction() {
+      if (remaining <= 0) {
+        document.getElementById("dialogue").innerText = "他今天已经很疲惫了，明天再来见他。";
+        return false;
+      }
+      remaining -= 1;
+      return true;
+    }
 
-  if(input.includes("为什么")){
-    reply="……这不是你该知道的事。";
-  }else if(input.includes("喜欢")){
-    reply="你不应该问这种问题。";
-  }else{
-    reply="……我不确定该怎么回答你。";
-  }
+    function talk() {
+      if (!spendAction()) return;
+      affinity += 1;
+      document.getElementById("dialogue").innerText = getDialogue("聊天");
+      updateUI();
+    }
 
-  document.getElementById("dialogue").innerText=reply;
-}
+    function touch() {
+      if (!spendAction()) return;
+      affinity += 2;
+      sync += 1;
+      document.getElementById("dialogue").innerText = getDialogue("触碰");
+      updateUI();
+    }
 
-update();
-</script>
+    function approach() {
+      if (!spendAction()) return;
+      affinity += 3;
+      sync += 1;
+      document.getElementById("dialogue").innerText = getDialogue("靠近");
+      updateUI();
+    }
 
+    function giveCandy() {
+      if (candy <= 0) {
+        document.getElementById("dialogue").innerText = "你已经没有糖果了。";
+        return;
+      }
+      if (!spendAction()) return;
+      candy -= 1;
+      affinity += 5;
+      sync += 2;
+      document.getElementById("dialogue").innerText = getDialogue("喂糖");
+      updateUI();
+    }
+
+    function claimCandy() {
+      if (claimed) return;
+      candy += 1;
+      claimed = true;
+      document.getElementById("dialogue").innerText = "你悄悄把糖放在他手边。他注意到了。";
+      updateUI();
+    }
+
+    function sendMessage() {
+      if (!spendAction()) return;
+
+      const input = document.getElementById("userInput").value.trim();
+      let reply = "……我不确定该怎么回答你。";
+
+      if (!input) {
+        reply = "你想说什么？";
+      } else if (input.includes("为什么")) {
+        reply = "……这不是你该知道的事。";
+      } else if (input.includes("喜欢")) {
+        reply = "你不应该问这种问题。";
+      } else if (input.includes("冷")) {
+        reply = "这里一直都很冷。我早就习惯了。";
+      } else if (input.includes("陪")) {
+        reply = "……你真的会留下来吗？";
+      } else if (input.includes("名字")) {
+        reply = "名字对这里来说，没有意义。";
+      }
+
+      document.getElementById("dialogue").innerText = reply;
+      document.getElementById("userInput").value = "";
+      updateUI();
+    }
+
+    updateUI();
+  </script>
 </body>
 </html>
