@@ -1,1 +1,117 @@
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: "PingFang SC", sans-serif;
+  background: #0b0b0c;
+  color: #ededed;
+}
+
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 12px;
+}
+
+.top-bar {
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #8a8a8f;
+}
+
+.scene {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.character-area {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111;
+}
+
+.character-area img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.dialogue-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 16px 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0));
+}
+
+#dialogueText {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.status-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.action-row button {
+  min-width: 92px;
+}
+
+button {
+  border: 1px solid #3a3a40;
+  background: #151518;
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: #151518;
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+}
