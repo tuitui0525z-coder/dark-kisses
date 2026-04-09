@@ -1,248 +1,249 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>当黑暗亲吻你</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>当黑暗亲吻你</title>
 
-<style>
-body {
-  margin: 0;
-  font-family: "PingFang SC", sans-serif;
-  background: #0b0b0c;
-  color: #ededed;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: "PingFang SC", sans-serif;
+      background: #0b0b0c;
+      color: #ededed;
+    }
 
-.container {
-  max-width: 460px;
-  margin: 0 auto;
-  padding: 20px;
-}
+    .container {
+      max-width: 460px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-.title {
-  font-size: 26px;
-  font-weight: 700;
-}
+    .title {
+      font-size: 26px;
+      font-weight: 700;
+    }
 
-.subtitle {
-  font-size: 12px;
-  color: #8a8a8f;
-  margin-top: 6px;
-}
+    .subtitle {
+      font-size: 12px;
+      color: #8a8a8f;
+      margin-top: 6px;
+    }
 
-.tag {
-  margin-top: 10px;
-  font-size: 11px;
-  color: #8a8a8f;
-}
+    .tag {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #8a8a8f;
+    }
 
-.character-box {
-  margin-top: 20px;
-}
+    .character-box {
+      margin-top: 20px;
+    }
 
-.character-box img {
-  width: 100%;
-  border-radius: 16px;
-}
+    .character-box img {
+      width: 100%;
+      border-radius: 16px;
+      display: block;
+    }
 
-.panel {
-  margin-top: 16px;
-  padding: 14px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.04);
-}
+    .panel {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+    }
 
-#chatBox {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 260px;
-  overflow-y: auto;
-}
+    #chatBox {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
 
-.message {
-  max-width: 80%;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
-}
+    .message {
+      max-width: 80%;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
 
-.user {
-  align-self: flex-end;
-  background: #2a2a2f;
-}
+    .user {
+      align-self: flex-end;
+      background: #2a2a2f;
+    }
 
-.bot {
-  align-self: flex-start;
-  background: #151518;
-}
+    .bot {
+      align-self: flex-start;
+      background: #151518;
+    }
 
-.buttons {
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
+    .buttons {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
 
-button {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #444;
-  background: transparent;
-  color: #fff;
-}
+    button {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      background: transparent;
+      color: #fff;
+    }
 
-input {
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: #1a1a1d;
-  color: #fff;
-}
-</style>
+    input {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: #1a1a1d;
+      color: #fff;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="container">
+    <div class="title">当黑暗亲吻你</div>
+    <div class="subtitle">他在黑暗中学会因你而变化</div>
+    <div class="tag">Demo v4 · story已接入</div>
 
-<div class="container">
+    <div class="character-box">
+      <img src="https://picsum.photos/480/720?grayscale" alt="角色图">
+    </div>
 
-<div class="title">当黑暗亲吻你</div>
-<div class="subtitle">他在黑暗中学会因你而变化</div>
-<div class="tag">Demo v3 · 可互动对话</div>
+    <div class="panel">
+      好感度：<span id="affinity">0</span>/100<br>
+      同步率：<span id="sync">3</span>%<br>
+      状态：<span id="status">警惕</span><br>
+      糖果：<span id="candy">1</span>
+    </div>
 
-<div class="character-box">
-<img src="https://picsum.photos/480/720?grayscale">
-</div>
+    <div class="panel">
+      <div id="chatBox"></div>
+    </div>
 
-<div class="panel">
-好感度：<span id="affinity">0</span>/100<br>
-同步率：<span id="sync">3</span>%<br>
-糖果：<span id="candy">1</span>
-</div>
+    <div class="panel">
+      <div>互动</div>
 
-<div class="panel">
-<div id="chatBox"></div>
-</div>
+      <div class="buttons">
+        <button onclick="talk()">聊天</button>
+        <button onclick="touch()">触碰</button>
+        <button onclick="giveCandy()">喂糖</button>
+        <button onclick="approach()">靠近</button>
+      </div>
 
-<div class="panel">
-<div>互动</div>
+      <input id="userInput" placeholder="你想对他说什么…">
+      <button onclick="sendMessage()">发送</button>
+    </div>
+  </div>
 
-<div class="buttons">
-<button onclick="talk()">聊天</button>
-<button onclick="touch()">触碰</button>
-<button onclick="giveCandy()">喂糖</button>
-<button onclick="approach()">靠近</button>
-</div>
+  <script src="story.js"></script>
 
-<input id="userInput" placeholder="你想对他说什么…">
-<button onclick="sendMessage()">发送</button>
-</div>
+  <script>
+    let affinity = 0;
+    let sync = 3;
+    let candy = 1;
 
-</div>
+    function getStatus() {
+      if (affinity >= 10) return "动摇";
+      return "警惕";
+    }
 
-<script>
+    function updateUI() {
+      document.getElementById("affinity").innerText = affinity;
+      document.getElementById("sync").innerText = sync;
+      document.getElementById("candy").innerText = candy;
+      document.getElementById("status").innerText = getStatus();
+    }
 
-let affinity = 0;
-let sync = 3;
-let candy = 1;
+    function addMessage(text, type) {
+      let chatBox = document.getElementById("chatBox");
 
-function updateUI(){
-  document.getElementById("affinity").innerText = affinity;
-  document.getElementById("sync").innerText = sync;
-  document.getElementById("candy").innerText = candy;
-}
+      let msg = document.createElement("div");
+      msg.className = "message " + type;
+      msg.innerText = text;
 
-function addMessage(text, type){
-  let chatBox = document.getElementById("chatBox");
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-  let msg = document.createElement("div");
-  msg.className = "message " + type;
-  msg.innerText = text;
+    window.onload = () => {
+      addMessage(STORY.初见[0], "bot");
+      addMessage(STORY.初见[1], "bot");
+      updateUI();
+    };
 
-  chatBox.appendChild(msg);
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
+    function talk() {
+      let status = getStatus();
+      affinity += 1;
+      addMessage(STORY[status].聊天, "bot");
+      updateUI();
+    }
 
-// 初始对白
-window.onload = () => {
-  addMessage("……你是谁？这里不是你该来的地方。", "bot");
-};
+    function touch() {
+      let status = getStatus();
+      affinity += 2;
+      sync += 1;
+      addMessage(STORY[status].触碰, "bot");
+      updateUI();
+    }
 
-function talk(){
-  affinity += 1;
-  addMessage("……别靠太近。", "bot");
-  updateUI();
-}
+    function approach() {
+      let status = getStatus();
+      affinity += 3;
+      addMessage(STORY[status].靠近, "bot");
+      updateUI();
+    }
 
-function touch(){
-  affinity += 2;
-  sync += 1;
-  addMessage("别碰我……", "bot");
-  updateUI();
-}
+    function giveCandy() {
+      let status = getStatus();
 
-function approach(){
-  affinity += 3;
-  addMessage("你为什么还不走？", "bot");
-  updateUI();
-}
+      if (candy <= 0) {
+        addMessage("你没有糖了。", "bot");
+        return;
+      }
 
-function giveCandy(){
-  if(candy <= 0){
-    addMessage("你没有糖了。", "bot");
-    return;
-  }
-  candy--;
-  affinity += 5;
-  sync += 2;
-  addMessage("……给我的？", "bot");
-  updateUI();
-}
+      candy -= 1;
+      affinity += 5;
+      sync += 2;
+      addMessage(STORY[status].喂糖, "bot");
+      updateUI();
+    }
 
-function sendMessage(){
+    function sendMessage() {
+      let input = document.getElementById("userInput").value.trim();
+      if (!input) return;
 
-  let input = document.getElementById("userInput").value.trim();
-  if(!input) return;
+      let status = getStatus();
+      let reply = STORY[status].输入.默认;
 
-  addMessage(input, "user");
+      addMessage(input, "user");
 
-  let reply = "……我不确定该怎么回答你。";
+      if (input.includes("为什么")) {
+        reply = STORY[status].输入.为什么;
+      } else if (input.includes("喜欢")) {
+        reply = STORY[status].输入.喜欢;
+      } else if (input.includes("冷")) {
+        reply = STORY[status].输入.冷;
+      } else if (input.includes("陪")) {
+        reply = STORY[status].输入.陪;
+      } else if (input.includes("名字")) {
+        reply = STORY[status].输入.名字;
+      }
 
-  // 关心
-  if(input.includes("陪") || input.includes("一起")){
-    reply = "……你没有必要这样。";
-    affinity += 2;
-  }
+      setTimeout(() => {
+        addMessage(reply, "bot");
+        updateUI();
+      }, 500);
 
-  // 探索
-  else if(input.includes("为什么") || input.includes("这里")){
-    reply = "……这个问题不该由你来问。";
-    sync += 2;
-  }
-
-  // 亲密
-  else if(input.includes("喜欢") || input.includes("想你")){
-    reply = "……不要说这种话。";
-    affinity += 3;
-  }
-
-  // 离开
-  else if(input.includes("走") || input.includes("不来了")){
-    reply = "……那你现在为什么还在这里。";
-    affinity += 3;
-  }
-
-  setTimeout(()=>{
-    addMessage(reply, "bot");
-    updateUI();
-  },500);
-
-  document.getElementById("userInput").value = "";
-}
-
-</script>
-
+      document.getElementById("userInput").value = "";
+    }
+  </script>
 </body>
 </html>
